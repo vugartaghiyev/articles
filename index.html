@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="articles">
+
+
+
+        </div>
+    </div>
+
+
+    <script>
+
+        const getArticles = async () => {
+            const response = await fetch('/json/code-test.json');
+            const data = await response.json();
+            displayArticles(data.articles);
+        };
+
+        getArticles();
+
+        const displayArticles = (articles) => {
+            const articlesContainer = document.querySelector('.articles');
+            let articlesStr = ""
+            articles.forEach(article => {
+                articlesStr += `
+                <a href="${article.link}" class="article">
+                    <div class="article__content">
+                        <p class="article__category">${article.primarySectionRouteName}</p>
+                        <p class="article__title">${article.headline}</p>
+                        <p class="article__desc">Use a similar font style, this does not have to be exact.
+                            ${article.standfirst}
+                        </p>
+                    </div>
+                    <img src="${article.thumbnail.src}" alt="" class="article__pic">
+                </a>
+                `
+            });
+            articlesContainer.innerHTML = articlesStr;
+            console.log(articles)
+        }
+
+    </script>
+
+</body>
+
+</html>
